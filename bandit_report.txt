@@ -1,0 +1,111 @@
+Run started:2026-11-18 04:48:57.406038+00:00
+
+Test results:
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'secret'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: ./target/app/app.py:26:11
+25	app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+26	app.config['SECRET_KEY_HMAC'] = 'secret'
+27	app.config['SECRET_KEY_HMAC_2'] = 'am0r3C0mpl3xK3y'
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'am0r3C0mpl3xK3y'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: ./target/app/app.py:27:11
+26	app.config['SECRET_KEY_HMAC'] = 'secret'
+27	app.config['SECRET_KEY_HMAC_2'] = 'am0r3C0mpl3xK3y'
+28	app.secret_key = 'F12Zr47j\3yX R~X@H!jmM]Lwf/,?KT'
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'F12Zr47jyX R~X@H!jmM]Lwf/,?KT'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: ./target/app/app.py:28:17
+27	app.config['SECRET_KEY_HMAC_2'] = 'am0r3C0mpl3xK3y'
+28	app.secret_key = 'F12Zr47j\3yX R~X@H!jmM]Lwf/,?KT'
+29	app.config['STATIC_FOLDER'] = None
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'admin123'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: ./target/app/app.py:63:24
+62	        user.username = 'admin'
+63	        user.password = 'admin123'
+64	        db.session.add(user)
+
+--------------------------------------------------
+>> Issue: [B324:hashlib] Use of weak MD5 hash for security. Consider usedforsecurity=False
+   Severity: High   Confidence: High
+   CWE: CWE-327 (https://cwe.mitre.org/data/definitions/327.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b324_hashlib.html
+   Location: ./target/app/app.py:141:24
+140	            password = content['password']
+141	            hash_pass = hashlib.md5(password).hexdigest()
+142	            new_user = User(username, hash_pass)
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ./target/app/app.py:261:32
+260	                    print(search_term)
+261	                    str_query = "SELECT first_name, last_name, username FROM customer WHERE username = '%s';" % search_term
+262	                    # mycust = Customer.query.filter_by(username = search_term).first()
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./target/app/app.py:295:15
+294	        f = request.files['file']
+295	        rand = random.randint(1, 100)
+296	        fname = secure_filename(f.filename)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./target/app/app.py:319:15
+318	        f = request.files['file']
+319	        rand = random.randint(1, 100)
+320	        fname = secure_filename(f.filename)
+
+--------------------------------------------------
+>> Issue: [B506:yaml_load] Use of unsafe yaml load. Allows instantiation of arbitrary objects. Consider yaml.safe_load().
+   Severity: Medium   Confidence: High
+   CWE: CWE-20 (https://cwe.mitre.org/data/definitions/20.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b506_yaml_load.html
+   Location: ./target/app/app.py:329:16
+328	
+329	        ydata = yaml.load(y)
+330	
+
+--------------------------------------------------
+
+Code scanned:
+	Total lines of code: 282
+	Total lines skipped (#nosec): 0
+	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
+
+Run metrics:
+	Total issues (by severity):
+		Undefined: 0
+		Low: 6
+		Medium: 2
+		High: 1
+	Total issues (by confidence):
+		Undefined: 0
+		Low: 1
+		Medium: 4
+		High: 4
+Files skipped (0):
